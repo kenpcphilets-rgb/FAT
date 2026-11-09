@@ -58,8 +58,8 @@ const CONFIG = {
     // 4. MẠNG XÃ HỘI / DIRECT CONNECTIONS:
     socials: [
         { name: "TikTok", icon: "fa-brands fa-tiktok", url: "https://www.tiktok.com/@nhatamxyz?lang=vi-VN" },
-        { name: "Facebook", icon: "fa-brands fa-facebook", url: "https://www.facebook.com/share/14tQ4AVe3Lv/?mibextid=wwXIfr" },
-        { name: "Instagram", icon: "fa-brands fa-instagram", url: "https://www.instagram.com/wnbj.00?mdxt=MWh5MjlyYXNsZTY1bA==" }
+        { name: "Facebook", icon: "fa-brands fa-facebook", url: "https://www.facebook.com/share/1DZdG7chnE/?mibextid=wwXIfr" },
+        { name: "Instagram", icon: "fa-brands fa-instagram", url: "https://www.instagram.com/nhaatazm?cplk=MWw0dzR2MHJ2cG1zZA==" }
     ],
 
     // 5. NHẠC NỀN & PLAYLIST:

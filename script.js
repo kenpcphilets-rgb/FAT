@@ -1,7 +1,7 @@
 /**
  * ====================================================================
- *                 NHẬT TÂM BIO - SCRIPT CONTROLLER ⚡
- *                  Midnight Chill & Cyber Boy Edition ⚡
+ *                 NHẬT TÂM BIO - SCRIPT CONTROLLER 🌙
+ *                  Midnight Chill & Aesthetic Boy Edition 🌙
  * ====================================================================
  */
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
    ==================================================================== */
 function initProfileUI() {
     // Set Browser Document Title
-    document.title = CONFIG.profile.name || "Nhật Tâm ⚡";
+    document.title = CONFIG.profile.name || "Nhật Tâm 🌙";
 
     // Set Profile Text
     const nameEl = document.getElementById('user-display-name');
@@ -49,13 +49,16 @@ function initProfileUI() {
     const cuteDecorEl = document.getElementById('cute-avatar-decoration');
     const avatarWrapper = document.getElementById('avatar-wrapper');
     const cuteAvatarWrap = document.querySelector('.cute-avatar-wrap');
-    if (CONFIG.profile.avatarDecoration) {
+    const defaultDecoration = CONFIG.profile.avatarDecoration || 'discord_avatar_decoration.png';
+    if (defaultDecoration) {
         if (decorEl) {
-            decorEl.src = CONFIG.profile.avatarDecoration;
+            decorEl.onerror = () => { decorEl.src = 'discord_avatar_decoration.png'; };
+            decorEl.src = defaultDecoration;
             decorEl.style.display = 'block';
         }
         if (cuteDecorEl) {
-            cuteDecorEl.src = CONFIG.profile.avatarDecoration;
+            cuteDecorEl.onerror = () => { cuteDecorEl.src = 'discord_avatar_decoration.png'; };
+            cuteDecorEl.src = defaultDecoration;
             cuteDecorEl.style.display = 'block';
         }
         if (avatarWrapper) avatarWrapper.classList.add('has-decoration');
@@ -627,8 +630,8 @@ function initMouseEffects() {
             if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple);
         }, 550);
 
-        // Spawn cute floating hearts / sparkles
-        const cuteIcons = ['💖', '🌸', '✨', '🎀', '🤍'];
+        // Spawn floating stardust & aesthetic icons
+        const cuteIcons = ['✦', '🌙', '🪐', '🎮', '🎧', '☕', '🐾', '✨', '⭐'];
         const chosenIcon = cuteIcons[Math.floor(Math.random() * cuteIcons.length)];
         const heartEl = document.createElement('span');
         heartEl.className = 'click-heart';
@@ -1097,27 +1100,24 @@ function updateDiscordPresenceUI(data) {
     const avatarWrapper = document.getElementById('avatar-wrapper');
     const cuteAvatarWrap = document.querySelector('.cute-avatar-wrap');
 
-    let decorationUrl = CONFIG.profile.avatarDecoration || null;
+    let decorationUrl = CONFIG.profile.avatarDecoration || 'discord_avatar_decoration.png';
     if (discord_user && discord_user.avatar_decoration_data && discord_user.avatar_decoration_data.asset) {
         decorationUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${discord_user.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
     }
 
     if (decorationUrl) {
         if (decorEl) {
+            decorEl.onerror = () => { decorEl.src = 'discord_avatar_decoration.png'; };
             decorEl.src = decorationUrl;
             decorEl.style.display = 'block';
         }
         if (cuteDecorEl) {
+            cuteDecorEl.onerror = () => { cuteDecorEl.src = 'discord_avatar_decoration.png'; };
             cuteDecorEl.src = decorationUrl;
             cuteDecorEl.style.display = 'block';
         }
         if (avatarWrapper) avatarWrapper.classList.add('has-decoration');
         if (cuteAvatarWrap) cuteAvatarWrap.classList.add('has-decoration');
-    } else {
-        if (decorEl) decorEl.style.display = 'none';
-        if (cuteDecorEl) cuteDecorEl.style.display = 'none';
-        if (avatarWrapper) avatarWrapper.classList.remove('has-decoration');
-        if (cuteAvatarWrap) cuteAvatarWrap.classList.remove('has-decoration');
     }
 
     // 2. Update Status Dot & Top Banner Status
@@ -1249,11 +1249,11 @@ function setMockDiscordState(is404 = false) {
     const customStatusText = document.getElementById('custom-status-text');
 
     if (statusDot) statusDot.className = 'status-dot online';
-    if (headerStatusText) headerStatusText.textContent = 'DISCORD • ONLINE ⚡';
+    if (headerStatusText) headerStatusText.textContent = 'DISCORD • ONLINE 🌙';
 
-    if (customStatusEmoji) customStatusEmoji.innerHTML = '⚡';
+    if (customStatusEmoji) customStatusEmoji.innerHTML = '🌙';
     if (customStatusText) {
-        customStatusText.innerHTML = `Active on Discord • @${CONFIG.profile.username || 'idksenz.'} ⚡`;
+        customStatusText.innerHTML = `Active on Discord • @${CONFIG.profile.username || 'idksenz.'} 🌙`;
     }
 }
 

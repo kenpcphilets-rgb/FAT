@@ -2,7 +2,7 @@
  * ====================================================================
  *                 NHẬT TÂM BIO - CẤU HÌNH TÙY CHỈNH (CONFIG)
  * ====================================================================
- * Chill, Cozy, Night Owl, Gaming, Lo-fi & Aesthetic Edition ♡
+ * Chill, Cozy, Night Owl, Gaming, Lo-fi & Tech Guy Edition 🌙
  */
 
 const CONFIG = {
@@ -13,27 +13,27 @@ const CONFIG = {
     profile: {
         name: "Nhật Tâm ♡",
         username: "idksenz.",
-        title: "Chuyên Gia Ngủ Nướng ☁️ Đam Mê Ăn Uống 🍰 Cozy Gamer 🎮 Lo-fi Lover 🎧 🌸",
+        title: "Night Owl 🌙 • Hardcore Gamer 🎮 • Lo-fi & Tech Addict 🎧 • Chill Guy 🪐",
         avatar: "avatar.jpg",
-        avatarDecoration: "",
-        useDiscordAvatarDecoration: false,
+        avatarDecoration: "discord_avatar_decoration.png",
+        useDiscordAvatarDecoration: true,
         banner: "banner.jpg",
-        bio: "welcome to nhat tam's cozy sanctuary ♡ một chiếc em bé thích chill hưởng thụ, ăn ngon ngủ kỹ, nghe nhạc lo-fi và cày game cùng bạn bè. tôn chỉ sống: việc gì khó quá thì mình đi ngủ, mai tính tiếp nha 🌸✨",
-        location: "Vietnam 🌸",
+        bio: "welcome to my chill sanctuary 🪐 ban ngày cày cuốc học tập ☕, ban đêm chill nhạc lofi và leo rank cùng anh em 🎧🎮. tôn chỉ sống: việc hôm nay chớ để ngày mai, mà hãy để ngày mốt ✨💤",
+        location: "Vietnam 🪐",
         quotes: [
-            "hôm nay ăn gì, ngủ bao nhiêu tiếng và chơi game gì nhỉ? 🍰",
-            "thế giới ngoài kia xô bồ quá, về đây chill nghe nhạc cùng nhật tâm đi ♡",
-            "tôn chỉ cuộc sống: ăn no, ngủ kỹ và luôn luôn đáng yêu 🌸",
-            "nạp vitamin trà sữa và thức khuya cày game 🎮✨",
-            "ngủ nướng là đam mê, ăn ngon là chân lý, chill là phong cách sống ☁️"
+            "đêm nay leo rank gì, nghe lofi hay ngủ sớm nhỉ? 🎮",
+            "thế giới ngoài kia ồn ào quá, vào đây chill nghe nhạc cùng tui đi 🎧",
+            "tôn chỉ cuộc sống: chill hết mình, chơi hết sức và luôn giữ cái đầu lạnh 🧊",
+            "nạp chút caffeine và thức khuya cày cuốc cùng anh em ☕✨",
+            "night owl chính hiệu, nhạc chill là chân lý, game là đam mê 🌙"
         ],
         badges: [
-            { icon: "fa-solid fa-bed", label: "Master Ngủ Nướng", color: "#fbcfe8" },
-            { icon: "fa-solid fa-utensils", label: "Đam Mê Ăn Uống", color: "#fda4af" },
-            { icon: "fa-solid fa-gamepad", label: "Cozy Gamer", color: "#c084fc" },
-            { icon: "fa-solid fa-headphones", label: "Lo-fi Addict", color: "#ff75a0" },
-            { icon: "fa-solid fa-mug-hot", label: "Trà Sữa 100% Đường", color: "#f472b6" },
-            { icon: "fa-solid fa-crown", label: "Nhật Tâm VIP", color: "#f9a8d4" }
+            { icon: "fa-solid fa-moon", label: "Night Owl", color: "#38bdf8" },
+            { icon: "fa-solid fa-gamepad", label: "Hardcore Gamer", color: "#818cf8" },
+            { icon: "fa-solid fa-headphones", label: "Lo-fi Addict", color: "#22d3ee" },
+            { icon: "fa-solid fa-mug-hot", label: "100% Caffeine", color: "#f59e0b" },
+            { icon: "fa-solid fa-paw", label: "Cat Lover", color: "#bae6fd" },
+            { icon: "fa-solid fa-crown", label: "Nhật Tâm VIP", color: "#fbbf24" }
         ]
     },
 
@@ -41,8 +41,8 @@ const CONFIG = {
     servers: [
         {
             name: "F8 Legendary",
-            role: "Cozy Hangout & Gaming Community 🌸",
-            description: "Không gian giao lưu, trò chuyện, quẩy game cực vui cùng Nhật Tâm & những người bạn siêu dễ thương ♡",
+            role: "Chill Hangout & Gaming Community 🎮",
+            description: "Không gian giao lưu, trò chuyện, quẩy game cực vui cùng Nhật Tâm & những người bạn chiến hữu 🎮",
             inviteUrl: "https://discord.gg/f8legendary",
             icon: "f8_icon.png",
             banner: "f8_banner.png",
@@ -50,7 +50,7 @@ const CONFIG = {
             cdnBanner: "https://cdn.discordapp.com/banners/1538307697076736084/6a27ba5864b94854c07f0e6d42578a81.png?size=1024",
             members: "710 Members",
             online: "181 Online",
-            tag: "OFFICIAL HUB 🌸",
+            tag: "OFFICIAL HUB 👑",
             featured: true
         }
     ],
@@ -69,17 +69,17 @@ const CONFIG = {
         playlist: [
             {
                 title: "10 Ngàn Năm",
-                artist: "PC • Nhật Tâm's Cozy Playlist ♡",
+                artist: "PC • Chill Night Playlist 🌙",
                 url: "10NganNam.mp3"
             },
             {
                 title: "Rain 7",
-                artist: "Chill Beats • Nhật Tâm's Cozy Playlist 🌸",
+                artist: "Chill Beats • Midnight Lofi 🎧",
                 url: "Rain7.mp3"
             }
         ],
         title: "10 Ngàn Năm",
-        artist: "PC • Nhật Tâm's Cozy Playlist ♡",
+        artist: "PC • Chill Night Playlist 🌙",
         url: "10NganNam.mp3"
     },
 
@@ -92,13 +92,13 @@ const CONFIG = {
         enableShootingStars: true
     },
 
-    // 7. SỞ THÍCH & DAILY VIBES (6 PILLARS CỦA NHẬT TÂM):
+    // 7. SỞ THÍCH & DAILY VIBES:
     techStack: [
-        { name: "Ngủ Nướng 12 Tiếng", domain: "Sạc lại năng lượng mỗi ngày ☁️", icon: "fa-solid fa-bed" },
-        { name: "Thế Giới Đồ Ăn", domain: "Trà sữa, bánh ngọt & đồ ngon 🍰", icon: "fa-solid fa-cake-candles" },
-        { name: "Cày Game Thâu Đêm", domain: "Valorant, Genshin & GTA V 🎮", icon: "fa-solid fa-gamepad" },
-        { name: "Lo-fi & R&B Vibes", domain: "Playlist chill không lối thoát 🎧", icon: "fa-solid fa-headphones" },
-        { name: "Mua Sắm & Làm Đẹp", domain: "Sưu tầm đồ cute & phụ kiện 🎀", icon: "fa-solid fa-bag-shopping" },
-        { name: "Chill & Hưởng Thụ", domain: "Tận hưởng từng khoảnh khắc ♡", icon: "fa-solid fa-heart" }
+        { name: "Chiến Thần Leo Rank", domain: "Valorant, CS2 & GTA V 🎮", icon: "fa-solid fa-gamepad" },
+        { name: "Chuyên Gia Thức Đêm", domain: "Năng lượng đỉnh nhất lúc 2h sáng 🌙", icon: "fa-solid fa-moon" },
+        { name: "Playlist Bất Hủ", domain: "Lo-fi, R&B & Phonk không lối thoát 🎧", icon: "fa-solid fa-headphones" },
+        { name: "Caffeine & Đồ Ngon", domain: "Cà phê đen, nước tăng lực & ăn đêm ☕", icon: "fa-solid fa-mug-hot" },
+        { name: "Góc Setup Chiến Game", domain: "Bàn PC, gear xịn & đèn led RGB 🖥️", icon: "fa-solid fa-desktop" },
+        { name: "Chill & Vibe Out", domain: "Tận hưởng từng khoảnh khắc cuộc sống ✨", icon: "fa-solid fa-star" }
     ]
 };

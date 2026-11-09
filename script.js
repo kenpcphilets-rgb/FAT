@@ -6,20 +6,8 @@
  * Parallax Banner Shimmer & Interactive Aesthetic FX.
  */
 
-// Global CDN Audio Fallbacks (Tự động kích hoạt khi host Vercel không có file nhạc)
-const ONLINE_AUDIO_MAP = {
-    'nang_tho': 'https://files.catbox.moe/zo5ng5.mp3',
-    'da_vu': 'https://files.catbox.moe/1sew8n.mp3',
-    '3107': 'https://files.catbox.moe/y13nxv.mp3',
-    'anh_sao': 'https://files.catbox.moe/bf3wuo.mp3',
-    'co_em': 'https://files.catbox.moe/kqirh2.mp3',
-    'buoc_qua': 'https://files.catbox.moe/8wbkas.mp3',
-    'emkhongcan': 'https://files.catbox.moe/f61o5o.mp3',
-    'du_cho': 'https://files.catbox.moe/aorw9q.mp3',
-    'cat_doi': 'https://files.catbox.moe/ouhxzb.mp3',
-    'bao_tien': 'https://files.catbox.moe/j0drgk.mp3',
-    'emkhongcan_alt': 'https://files.catbox.moe/j6f8qk.mp3'
-};
+// GitHub Raw CDN Base (Fallback bảo đảm 100% khi host Vercel không tìm thấy file cục bộ)
+const GH_RAW_BASE = 'https://raw.githubusercontent.com/kenpcphilets-rgb/FAT/main';
 
 if (typeof window.CONFIG === 'undefined' || !window.CONFIG.profile) {
     window.CONFIG = {
@@ -85,17 +73,17 @@ if (typeof window.CONFIG === 'undefined' || !window.CONFIG.profile) {
             autoplayOnEnter: true,
             volume: 0.45,
             playlist: [
-                { id: "track-1", title: "Nàng Thơ (Lofi Chill)", artist: "Hoàng Dũng • Lofi Chillhop", duration: "4:12", url: "https://files.catbox.moe/zo5ng5.mp3", fallbackUrl: "nang_tho.mp3", tag: "V-POP LOFI" },
-                { id: "track-2", title: "Dạ Vũ (Lofi Chill Mix)", artist: "Tăng Duy Tân • V-Lofi Session", duration: "3:15", url: "https://files.catbox.moe/1sew8n.mp3", fallbackUrl: "da_vu.mp3", tag: "V-POP CHILL" },
-                { id: "track-3", title: "3107 - 3 (Lofi Ver)", artist: "W/n ft. Duongg, Nâu, Titie", duration: "3:55", url: "https://files.catbox.moe/y13nxv.mp3", fallbackUrl: "3107_3.mp3", tag: "SAD LOFI" },
-                { id: "track-4", title: "Ánh Sao Và Bầu Trời", artist: "T.R.I x Cá • Lofi Melody", duration: "4:08", url: "https://files.catbox.moe/bf3wuo.mp3", fallbackUrl: "anh_sao_va_bau_troi.mp3", tag: "MELODY CHILL" },
-                { id: "track-5", title: "Có Em (Chill Mix)", artist: "Madihu ft. Low G • Indie Chill", duration: "3:36", url: "https://files.catbox.moe/kqirh2.mp3", fallbackUrl: "co_em.mp3", tag: "INDIE CHILL" },
-                { id: "track-6", title: "Bước Qua Mùa Cô Đơn", artist: "Vũ • Lofi Acoustic Version", duration: "4:18", url: "https://files.catbox.moe/8wbkas.mp3", fallbackUrl: "buoc_qua_mua_co_don.mp3", tag: "ACOUSTIC LOFI" },
-                { id: "track-7", title: "Em Không Cần (Chill Session)", artist: "Hannie • Lofi V-Pop Mix", duration: "3:20", url: "https://files.catbox.moe/f61o5o.mp3", fallbackUrl: "emkhongcan.mp3", tag: "V-POP LOFI" },
-                { id: "track-8", title: "Dù Cho Mai Về Sau", artist: "buitruonglinh • Lofi Sweet", duration: "3:45", url: "https://files.catbox.moe/aorw9q.mp3", fallbackUrl: "du_cho_mai_ve_sau.mp3", tag: "SWEET LOFI" },
-                { id: "track-9", title: "Cắt Đôi Nỗi Sầu (Lofi Chill)", artist: "Tăng Duy Tân • Chillhop Beats", duration: "3:05", url: "https://files.catbox.moe/ouhxzb.mp3", fallbackUrl: "cat_doi_noi_sau.mp3", tag: "CHILL VIBES" },
-                { id: "track-10", title: "Bao Tiền Một Mớ Bình Yên", artist: "14 Casper & Bon Nghiêm • Lofi", duration: "3:50", url: "https://files.catbox.moe/j0drgk.mp3", fallbackUrl: "bao_tien_mot_mo_binh_yen.mp3", tag: "HEALING LOFI" },
-                { id: "track-11", title: "Em Không Cần (Acoustic Night)", artist: "Hannie • Midnight Sanctuary", duration: "4:25", url: "https://files.catbox.moe/j6f8qk.mp3", fallbackUrl: "emkhongcan_alt.mp3", tag: "ACOUSTIC" }
+                { id: "track-1", title: "Nàng Thơ (Lofi Chill)", artist: "Hoàng Dũng • Lofi Chillhop", duration: "4:12", url: "nang_tho.mp3", tag: "V-POP LOFI" },
+                { id: "track-2", title: "Dạ Vũ (Lofi Chill Mix)", artist: "Tăng Duy Tân • V-Lofi Session", duration: "3:15", url: "da_vu.mp3", tag: "V-POP CHILL" },
+                { id: "track-3", title: "3107 - 3 (Lofi Ver)", artist: "W/n ft. Duongg, Nâu, Titie", duration: "3:55", url: "3107_3.mp3", tag: "SAD LOFI" },
+                { id: "track-4", title: "Ánh Sao Và Bầu Trời", artist: "T.R.I x Cá • Lofi Melody", duration: "4:08", url: "anh_sao_va_bau_troi.mp3", tag: "MELODY CHILL" },
+                { id: "track-5", title: "Có Em (Chill Mix)", artist: "Madihu ft. Low G • Indie Chill", duration: "3:36", url: "co_em.mp3", tag: "INDIE CHILL" },
+                { id: "track-6", title: "Bước Qua Mùa Cô Đơn", artist: "Vũ • Lofi Acoustic Version", duration: "4:18", url: "buoc_qua_mua_co_don.mp3", tag: "ACOUSTIC LOFI" },
+                { id: "track-7", title: "Em Không Cần (Chill Session)", artist: "Hannie • Lofi V-Pop Mix", duration: "3:20", url: "emkhongcan.mp3", tag: "V-POP LOFI" },
+                { id: "track-8", title: "Dù Cho Mai Về Sau", artist: "buitruonglinh • Lofi Sweet", duration: "3:45", url: "du_cho_mai_ve_sau.mp3", tag: "SWEET LOFI" },
+                { id: "track-9", title: "Cắt Đôi Nỗi Sầu (Lofi Chill)", artist: "Tăng Duy Tân • Chillhop Beats", duration: "3:05", url: "cat_doi_noi_sau.mp3", tag: "CHILL VIBES" },
+                { id: "track-10", title: "Bao Tiền Một Mớ Bình Yên", artist: "14 Casper & Bon Nghiêm • Lofi", duration: "3:50", url: "bao_tien_mot_mo_binh_yen.mp3", tag: "HEALING LOFI" },
+                { id: "track-11", title: "Em Không Cần (Acoustic Night)", artist: "Hannie • Midnight Sanctuary", duration: "4:25", url: "emkhongcan_alt.mp3", tag: "ACOUSTIC" }
             ]
         },
         effects: {
@@ -447,15 +435,26 @@ function initClickToEnter() {
     function triggerAutoplay() {
         if (!CONFIG.music || !CONFIG.music.autoplayOnEnter) return;
         const audio = document.getElementById('bg-audio');
-        if (audio && audio.paused) {
-            audio.play().then(() => {
-                updateAudioWidgetState(true);
-                if (playlist.length > 0 && playlist[currentTrackIndex]) {
-                    showToast(`Đang phát: ${playlist[currentTrackIndex].title}`, 'fa-solid fa-music');
+        if (audio) {
+            if (!audio.src || audio.src === '' || audio.src.endsWith('/')) {
+                if (typeof window.bioPlayer !== 'undefined' && window.bioPlayer.load) {
+                    window.bioPlayer.load(0, true);
+                    return;
                 }
-            }).catch(e => {
-                console.log('Autoplay waiting for user gesture:', e);
-            });
+            }
+            if (audio.paused) {
+                const p = audio.play();
+                if (p !== undefined) {
+                    p.then(() => {
+                        updateAudioWidgetState(true);
+                        if (playlist.length > 0 && playlist[currentTrackIndex]) {
+                            showToast(`Đang phát: ${playlist[currentTrackIndex].title}`, 'fa-solid fa-music');
+                        }
+                    }).catch(e => {
+                        console.log('Autoplay waiting for user gesture:', e);
+                    });
+                }
+            }
         }
     }
 
@@ -482,10 +481,12 @@ function initClickToEnter() {
         window.removeEventListener('click', unlockOnce);
         window.removeEventListener('touchstart', unlockOnce);
         window.removeEventListener('keydown', unlockOnce);
+        window.removeEventListener('pointerdown', unlockOnce);
     };
     window.addEventListener('click', unlockOnce, { once: true, passive: true });
     window.addEventListener('touchstart', unlockOnce, { once: true, passive: true });
     window.addEventListener('keydown', unlockOnce, { once: true, passive: true });
+    window.addEventListener('pointerdown', unlockOnce, { once: true, passive: true });
 }
 
 /* ====================================================================
@@ -584,21 +585,37 @@ function initAudioController() {
         renderPlaylistUI();
 
         if (autoPlay) {
-            audio.play().then(() => {
-                updateAudioWidgetState(true);
-                showToast(`Đang phát: ${track.title}`, 'fa-solid fa-music');
-            }).catch(err => {
-                updateAudioWidgetState(false);
-            });
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    consecutiveErrors = 0;
+                    updateAudioWidgetState(true);
+                    showToast(`Đang phát: ${track.title}`, 'fa-solid fa-music');
+                }).catch(err => {
+                    console.log('Playback error or waiting for gesture:', err);
+                    updateAudioWidgetState(false);
+                });
+            }
         }
     }
 
     function togglePlayPause() {
         playBeepSound(520, 0.05);
+        if (!audio.src || audio.src === '' || audio.src.endsWith('/')) {
+            loadTrack(currentTrackIndex, true);
+            return;
+        }
         if (audio.paused) {
-            audio.play().then(() => {
-                updateAudioWidgetState(true);
-            }).catch(e => console.log('Audio playback error:', e));
+            const p = audio.play();
+            if (p !== undefined) {
+                p.then(() => {
+                    consecutiveErrors = 0;
+                    updateAudioWidgetState(true);
+                }).catch(e => {
+                    console.log('Audio playback error, reloading track:', e);
+                    loadTrack(currentTrackIndex, true);
+                });
+            }
         } else {
             audio.pause();
             updateAudioWidgetState(false);
@@ -642,42 +659,58 @@ function initAudioController() {
         });
     }
 
-    audio.addEventListener('play', () => updateAudioWidgetState(true));
+    let consecutiveErrors = 0;
+    audio.addEventListener('play', () => {
+        consecutiveErrors = 0;
+        updateAudioWidgetState(true);
+    });
     audio.addEventListener('pause', () => updateAudioWidgetState(false));
     audio.addEventListener('ended', playNextTrack);
     audio.addEventListener('error', (e) => {
-        const currentTrack = playlist[currentTrackIndex];
-        console.warn('Lỗi tải file âm thanh:', audio.src);
+        consecutiveErrors++;
+        console.warn(`[Audio Error] Không thể phát: ${audio.src} (lần ${consecutiveErrors})`);
 
-        // 1. Tự động thử chuyển sang file cùng tên ở thư mục gốc (root)
-        if (audio.src && audio.src.includes('audio/') && !audio.src.includes('catbox.moe')) {
-            const fileName = audio.src.split('audio/').pop();
-            console.log(`Đang thử nguồn gốc file: ${fileName}`);
+        // Tránh lặp vô hạn nếu toàn bộ danh sách gặp sự cố
+        if (consecutiveErrors > playlist.length + 2) {
+            console.warn('[Audio] Đã duyệt qua tất cả bài hát trong danh sách.');
+            updateAudioWidgetState(false);
+            return;
+        }
+
+        const rawUrl = audio.src || '';
+        const fileName = rawUrl.split('/').pop().split('?')[0];
+
+        // 1. Nếu đang gọi qua thư mục 'audio/xxx.mp3', thử ngay file cùng tên ở thư mục gốc (root)
+        if (rawUrl.includes('/audio/') && !rawUrl.includes('githubusercontent')) {
+            console.log(`[Audio Recovery] Thử file ở thư mục gốc: ${fileName}`);
             audio.src = fileName;
             audio.load();
-            audio.play().then(() => updateAudioWidgetState(true)).catch(() => {});
+            audio.play().then(() => {
+                consecutiveErrors = 0;
+                updateAudioWidgetState(true);
+            }).catch(() => {});
             return;
         }
 
-        // 2. Tự động chuyển sang link CDN online đám mây
-        let matchedCdn = null;
-        for (const [key, cdnUrl] of Object.entries(ONLINE_AUDIO_MAP)) {
-            if (audio.src && audio.src.toLowerCase().includes(key)) {
-                matchedCdn = cdnUrl;
-                break;
-            }
-        }
-
-        if (matchedCdn && audio.src !== matchedCdn) {
-            console.log(`Đang tự động chuyển sang CDN đám mây: ${matchedCdn}`);
-            audio.src = matchedCdn;
+        // 2. Nếu file cục bộ trên host chưa có hoặc 404, tự động chuyển sang GitHub Raw CDN của repo FAT
+        if (!rawUrl.includes('raw.githubusercontent.com') && fileName.endsWith('.mp3')) {
+            const ghRaw = `${GH_RAW_BASE}/${fileName}`;
+            console.log(`[Audio Recovery] Chuyển sang GitHub Raw CDN: ${ghRaw}`);
+            audio.src = ghRaw;
             audio.load();
-            audio.play().then(() => updateAudioWidgetState(true)).catch(() => {});
+            audio.play().then(() => {
+                consecutiveErrors = 0;
+                updateAudioWidgetState(true);
+            }).catch(() => {});
             return;
         }
 
-        // 3. Fallback sang bài kế tiếp một cách mượt mà không làm đơ web
-        updateAudioWidgetState(false);
+        // 3. Nếu file chưa được tải lên, tự động chuyển sang bài tiếp theo mượt mà
+        console.log(`[Audio Recovery] File chưa sẵn sàng, tự động chuyển sang bài tiếp theo...`);
+        setTimeout(() => {
+            const nextIdx = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(nextIdx, true);
+        }, 300);
     });
 
     window.bioPlayer = {

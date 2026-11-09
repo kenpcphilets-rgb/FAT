@@ -86,17 +86,17 @@ const CONFIG = {
         { name: "Steam", icon: "fa-brands fa-steam", url: "https://steamcommunity.com/profiles/76561199524577128/", brand: "steam" }
     ],
 
-    // 4. DANH SÁCH NHẠC (MUSIC PLAYLIST - 100% ONLINE HTTPS CDN VERCEL-READY):
+    // 4. DANH SÁCH NHẠC (MUSIC PLAYLIST - 100% VIETNAMESE CHILL):
     music: {
         autoplayOnEnter: true,
-        volume: 0.45,
+        volume: 0.5,
         playlist: [
             {
                 id: "track-1",
                 title: "Nàng Thơ (Lofi Chill)",
                 artist: "Hoàng Dũng • Lofi Chillhop",
                 duration: "4:12",
-                url: "https://files.catbox.moe/zo5ng5.mp3",
+                url: "nang_tho.mp3",
                 tag: "V-POP LOFI"
             },
             {
@@ -104,7 +104,7 @@ const CONFIG = {
                 title: "Dạ Vũ (Lofi Chill Mix)",
                 artist: "Tăng Duy Tân • V-Lofi Session",
                 duration: "3:15",
-                url: "https://files.catbox.moe/1sew8n.mp3",
+                url: "da_vu.mp3",
                 tag: "V-POP CHILL"
             },
             {
@@ -112,7 +112,7 @@ const CONFIG = {
                 title: "3107 - 3 (Lofi Ver)",
                 artist: "W/n ft. Duongg, Nâu, Titie",
                 duration: "3:55",
-                url: "https://files.catbox.moe/y13nxv.mp3",
+                url: "3107_3.mp3",
                 tag: "SAD LOFI"
             },
             {
@@ -120,7 +120,7 @@ const CONFIG = {
                 title: "Ánh Sao Và Bầu Trời",
                 artist: "T.R.I x Cá • Lofi Melody",
                 duration: "4:08",
-                url: "https://files.catbox.moe/bf3wuo.mp3",
+                url: "anh_sao_va_bau_troi.mp3",
                 tag: "MELODY CHILL"
             },
             {
@@ -128,7 +128,7 @@ const CONFIG = {
                 title: "Có Em (Chill Mix)",
                 artist: "Madihu ft. Low G • Indie Chill",
                 duration: "3:36",
-                url: "https://files.catbox.moe/kqirh2.mp3",
+                url: "co_em.mp3",
                 tag: "INDIE CHILL"
             },
             {
@@ -136,7 +136,7 @@ const CONFIG = {
                 title: "Bước Qua Mùa Cô Đơn",
                 artist: "Vũ • Lofi Acoustic Version",
                 duration: "4:18",
-                url: "https://files.catbox.moe/8wbkas.mp3",
+                url: "buoc_qua_mua_co_don.mp3",
                 tag: "ACOUSTIC LOFI"
             },
             {
@@ -144,7 +144,7 @@ const CONFIG = {
                 title: "Em Không Cần (Chill Session)",
                 artist: "Hannie • Lofi V-Pop Mix",
                 duration: "3:20",
-                url: "https://files.catbox.moe/f61o5o.mp3",
+                url: "emkhongcan.mp3",
                 tag: "V-POP LOFI"
             },
             {
@@ -152,7 +152,7 @@ const CONFIG = {
                 title: "Dù Cho Mai Về Sau",
                 artist: "buitruonglinh • Lofi Sweet",
                 duration: "3:45",
-                url: "https://files.catbox.moe/aorw9q.mp3",
+                url: "du_cho_mai_ve_sau.mp3",
                 tag: "SWEET LOFI"
             },
             {
@@ -160,7 +160,7 @@ const CONFIG = {
                 title: "Cắt Đôi Nỗi Sầu (Lofi Chill)",
                 artist: "Tăng Duy Tân • Chillhop Beats",
                 duration: "3:05",
-                url: "https://files.catbox.moe/ouhxzb.mp3",
+                url: "cat_doi_noi_sau.mp3",
                 tag: "CHILL VIBES"
             },
             {
@@ -168,7 +168,7 @@ const CONFIG = {
                 title: "Bao Tiền Một Mớ Bình Yên",
                 artist: "14 Casper & Bon Nghiêm • Lofi",
                 duration: "3:50",
-                url: "https://files.catbox.moe/j0drgk.mp3",
+                url: "bao_tien_mot_mo_binh_yen.mp3",
                 tag: "HEALING LOFI"
             },
             {
@@ -176,7 +176,7 @@ const CONFIG = {
                 title: "Em Không Cần (Acoustic Night)",
                 artist: "Hannie • Midnight Sanctuary",
                 duration: "4:25",
-                url: "https://files.catbox.moe/j6f8qk.mp3",
+                url: "emkhongcan_alt.mp3",
                 tag: "ACOUSTIC"
             }
         ]

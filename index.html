@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phạm Nhật Tâm • Music Sanctuary</title>
+    <meta name="description" content="Không gian Bio cá nhân đậm chất nghệ thuật của Phạm Nhật Tâm. Đam mê âm nhạc Lofi Chill, đĩa than cổ điển, công nghệ sáng tạo & cộng đồng F8.">
+    <meta property="og:title" content="Phạm Nhật Tâm • Music Sanctuary">
+    <meta property="og:description" content="Khám phá không gian âm nhạc Lofi và thế giới sáng tạo của Phạm Nhật Tâm.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#07070a">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome 6 Pro/Free Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Rounded Avatar Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=6.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=6.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=6.0">
+    <link rel="shortcut icon" href="favicon.ico?v=6.0">
+
+    <!-- Stylesheet with Cache Buster -->
+    <link rel="stylesheet" href="style.css?v=6.0">
+</head>
+<body>
+    <!-- Background Canvas for Particles & Constellations -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Ambient Dynamic Mouse Spotlight -->
+    <div id="mouse-spotlight"></div>
+
+    <!-- Cyber Reticle HUD Cursor -->
+    <div id="cyber-cursor" class="cyber-cursor">
+        <div class="cursor-crosshair"></div>
+        <div class="cursor-brackets">
+            <span class="corner c-tl"></span>
+            <span class="corner c-tr"></span>
+            <span class="corner c-br"></span>
+            <span class="corner c-bl"></span>
+        </div>
+        <div class="cursor-diamond"></div>
+    </div>
+
+    <!-- Cinematic Welcome Screen -->
+    <div id="enter-overlay" class="enter-overlay">
+        <!-- Floating Ambient Decor Elements -->
+        <div class="cute-floating-decor">
+            <span class="decor-sparkle d-1">♪</span>
+            <span class="decor-sparkle d-2">☁️</span>
+            <span class="decor-sparkle d-3">♫</span>
+            <span class="decor-sparkle d-4">🤍</span>
+            <span class="decor-sparkle d-5">✧</span>
+        </div>
+
+        <div class="cute-enter-card">
+            <!-- Avatar with Soft Breathing Halo -->
+            <div class="cute-avatar-wrap">
+                <div class="cute-avatar-halo"></div>
+                <img src="avatar.jpg" alt="Phạm Nhật Tâm Avatar" class="cute-avatar-img">
+                <span class="cute-greet-bubble">music & lofi chill 🎧</span>
+            </div>
+
+            <!-- Profile Info: Welcoming & Poetic -->
+            <div class="cute-identity">
+                <div class="cute-name-box">
+                    <span class="cute-name">Phạm Nhật Tâm</span>
+                    <span class="cute-sparkle-icon">✧</span>
+                </div>
+                <p class="cute-subtext">welcome to my private music sanctuary</p>
+            </div>
+
+            <!-- Glowing Action Pill Button -->
+            <div class="cute-pill-btn">
+                <span class="cute-pill-icon"><i class="fa-solid fa-play"></i></span>
+                <span class="cute-pill-label">enter sanctuary</span>
+                <span class="cute-pill-star">✨</span>
+            </div>
+
+            <!-- Audio Note -->
+            <div class="cute-audio-hint">
+                <i class="fa-solid fa-headphones-simple"></i>
+                <span>lofi beats playlist ready • click anywhere to explore</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bg-audio" preload="auto"></audio>
+
+    <!-- Floating Audio Control Widget -->
+    <div class="audio-widget" id="audio-widget" title="Điều khiển nhạc nền">
+        <div class="audio-disc" id="audio-disc">
+            <i class="fa-solid fa-compact-disc"></i>
+        </div>
+        <div class="audio-info">
+            <div class="audio-track" id="audio-track-title">Lofi Chill</div>
+            <div class="audio-artist" id="audio-artist-name">1/2 • Phạm Nhật Tâm Sanctuary</div>
+        </div>
+        <div class="audio-controls">
+            <button id="audio-prev-btn" class="ctrl-btn" aria-label="Bài trước" title="Bài trước (Previous)">
+                <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button id="audio-play-btn" class="ctrl-btn play-btn-main" aria-label="Phát / Tạm dừng" title="Phát / Tạm dừng">
+                <i class="fa-solid fa-play" id="play-icon"></i>
+            </button>
+            <button id="audio-next-btn" class="ctrl-btn" aria-label="Bài tiếp theo" title="Bài tiếp theo (Next)">
+                <i class="fa-solid fa-forward-step"></i>
+            </button>
+            <div class="equalizer" id="equalizer">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+                <span class="bar bar-4"></span>
+            </div>
+            <div class="volume-slider-wrap">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.45" aria-label="Volume">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+        <div class="card-tilt-container" id="tilt-container">
+            <article class="bio-card" id="bio-card">
+                <!-- Dynamic Card Glare Reflection -->
+                <div class="card-glare" id="card-glare"></div>
+
+                <!-- TOP CINEMATIC BANNER (Taller, Atmospheric & Soundwaves) -->
+                <div class="card-banner" id="card-banner">
+                    <!-- Dynamic Banner Image Layer with Parallax & Crossfade -->
+                    <div class="banner-img-layer" id="banner-img-layer"></div>
+                    <!-- Ambient Breathing Glow Orbs -->
+                    <div class="banner-ambient-glow"></div>
+                    <!-- Animated Holographic Laser Sweep -->
+                    <div class="banner-shimmer-ray"></div>
+                    <!-- Futuristic Cyber Grid / Scanlines -->
+                    <div class="banner-grid-overlay"></div>
+                    <!-- Deep Smooth Vignette Gradient (No harsh dividing lines) -->
+                    <div class="banner-gradient"></div>
+
+                    <!-- Live Equalizer Soundwaves inside Banner -->
+                    <div class="banner-audio-waves" id="banner-audio-waves" title="Live Audio Visualizer">
+                        <span class="bw-bar bw-1"></span>
+                        <span class="bw-bar bw-2"></span>
+                        <span class="bw-bar bw-3"></span>
+                        <span class="bw-bar bw-4"></span>
+                        <span class="bw-bar bw-5"></span>
+                        <span class="bw-bar bw-6"></span>
+                        <span class="bw-bar bw-7"></span>
+                        <span class="bw-bar bw-8"></span>
+                        <span class="bw-bar bw-9"></span>
+                        <span class="bw-bar bw-10"></span>
+                        <span class="bw-bar bw-11"></span>
+                        <span class="bw-bar bw-12"></span>
+                    </div>
+
+                    <!-- Top HUD Navigation & Status Bar on Banner -->
+                    <div class="banner-hud-bar">
+                        <div class="banner-hud-left">
+                            <span class="hud-tag"><i class="fa-solid fa-headphones"></i> PHẠM NHẬT TÂM</span>
+                            <span class="hud-sep">•</span>
+                            <span class="hud-status" id="banner-hud-tag">MUSIC SANCTUARY</span>
+                        </div>
+                        <div class="banner-hud-right">
+                            <button class="banner-switch-btn" id="banner-switch-btn" title="Đổi giao diện banner">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span class="switch-label">Switch Banner</span>
+                            </button>
+                            <div class="banner-badge-top" id="header-music-badge">
+                                <span class="live-music-dot"></span>
+                                <span id="header-music-text">NOW PLAYING: LOFI CHILL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Profile Bar (Full width, perfectly seamless, no cut lines) -->
+                <section class="card-profile-bar">
+                    <div class="profile-main-info">
+                        <div class="avatar-wrapper" id="avatar-wrapper" title="Phạm Nhật Tâm • Click để phóng to avatar">
+                            <div class="avatar-glow-ring"></div>
+                            <img src="avatar.jpg" alt="Phạm Nhật Tâm Avatar" id="profile-avatar" class="profile-avatar">
+                            <div class="status-indicator" id="status-indicator" title="Music Mode Active">
+                                <span class="status-music-icon"><i class="fa-solid fa-music"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="user-meta">
+                            <div class="name-row">
+                                <h1 class="user-display-name" id="user-display-name">Phạm Nhật Tâm</h1>
+                                <span class="verified-badge" id="verified-badge" title="Verified Creator • Music Sanctuary">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </span>
+                            </div>
+                            <div class="handle-row">
+                                <span class="user-handle" id="user-handle">@darakz.xyz</span>
+                                <button class="copy-tag-btn" id="copy-tag-btn" title="Sao chép Discord Tag">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span class="tooltip">Copy Discord</span>
+                                </button>
+                                <span class="meta-dot-sep">•</span>
+                                <p class="user-tagline" id="user-tagline">Music Enthusiast • Creative Digital Artisan • F8 Sanctuary</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges Bar in Header -->
+                    <div class="badges-container" id="badges-container" aria-label="Huy hiệu đam mê & danh dự">
+                        <!-- Dynamic badges populated from config -->
+                    </div>
+                </section>
+
+                <!-- Bento Body (Balanced 2-column layout) -->
+                <div class="card-bento-body">
+                    <!-- LEFT COLUMN: Terminal Quotes, Bio Poem & Dedicated Music Sanctuary -->
+                    <div class="bento-col bento-col-left">
+                        <!-- Terminal Style Typewriter Quotes -->
+                        <div class="quote-box">
+                            <div class="terminal-dots">
+                                <span class="term-dot dot-red"></span>
+                                <span class="term-dot dot-yellow"></span>
+                                <span class="term-dot dot-green"></span>
+                            </div>
+                            <span class="terminal-prompt">&gt;_</span>
+                            <span class="quote-text" id="typewriter-quote"></span>
+                            <span class="typewriter-cursor">|</span>
+                        </div>
+
+                        <!-- Poetic Bio Description for Phạm Nhật Tâm -->
+                        <div class="user-bio-wrap">
+                            <p class="user-bio" id="user-bio">
+                                Tôi là <strong class="name-highlight">Phạm Nhật Tâm</strong> — một tâm hồn say đắm những thanh âm Lofi êm đềm, tìm kiếm sự tự do và an yên giữa từng giai điệu và thế giới số. Đối với tôi, âm nhạc là ngôn ngữ chữa lành cảm xúc, còn công nghệ là nơi tôi thỏa sức định hình phong cách và sáng tạo thế giới của riêng mình.
+                            </p>
+                        </div>
+
+                        <!-- DEDICATED MUSIC SANCTUARY & VINYL SHOWCASE (Chủ đề mê âm nhạc) -->
+                        <section class="music-sanctuary-section" id="music-sanctuary-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-compact-disc"></i>
+                                <span>MY MUSIC SANCTUARY • GÓC ÂM NHẠC</span>
+                                <div class="music-pulse-indicator" title="Audio Active">
+                                    <span class="pulse-ring"></span>
+                                    <span class="pulse-dot"></span>
+                                </div>
+                            </div>
+
+                            <!-- Featured Vinyl & Live Player Card -->
+                            <div class="music-player-card" id="music-player-card">
+                                <div class="vinyl-showcase" id="vinyl-showcase">
+                                    <div class="vinyl-outer-ring">
+                                        <div class="vinyl-grooves"></div>
+                                        <div class="vinyl-center-label">
+                                            <i class="fa-solid fa-music"></i>
+                                        </div>
+                                    </div>
+                                    <div class="vinyl-tonearm"></div>
+                                </div>
+
+                                <div class="music-card-details">
+                                    <div class="music-genre-badge">
+                                        <i class="fa-solid fa-headphones"></i> NOW PLAYING • CHILL VIBES
+                                    </div>
+                                    <div class="now-track-title" id="now-track-title">Lofi Chill</div>
+                                    <div class="now-track-artist" id="now-track-artist">Chill Beats • Sanctuary</div>
+
+                                    <!-- Live Animated Equalizer Soundwaves -->
+                                    <div class="music-card-wave" id="music-card-wave">
+                                        <span class="mw-bar m1"></span>
+                                        <span class="mw-bar m2"></span>
+                                        <span class="mw-bar m3"></span>
+                                        <span class="mw-bar m4"></span>
+                                        <span class="mw-bar m5"></span>
+                                        <span class="mw-bar m6"></span>
+                                        <span class="mw-bar m7"></span>
+                                        <span class="mw-bar m8"></span>
+                                        <span class="mw-bar m9"></span>
+                                        <span class="mw-bar m10"></span>
+                                        <span class="mw-bar m11"></span>
+                                        <span class="mw-bar m12"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Playlist Selector -->
+                            <div class="playlist-container">
+                                <div class="playlist-header">
+                                    <span><i class="fa-solid fa-list-ul"></i> DANH SÁCH BÀI HÁT YÊU THÍCH</span>
+                                    <span class="playlist-count" id="playlist-count">2 Tracks</span>
+                                </div>
+                                <div class="playlist-tracks" id="playlist-tracks">
+                                    <!-- Rendered dynamically from config.music.playlist -->
+                                </div>
+                            </div>
+
+                            <!-- Music Mood & Quote Card -->
+                            <div class="music-mood-card">
+                                <i class="fa-solid fa-quote-left mood-quote-icon"></i>
+                                <p class="music-mood-quote">
+                                    "Âm nhạc là liều thuốc xoa dịu tâm hồn. Những đêm muộn cùng chiếc tai nghe và giai điệu Lofi dịu êm là khoảng thời gian tôi thấy mình tự do và bình yên nhất."
+                                </p>
+                                <div class="music-tags-row">
+                                    <span class="music-pill-tag">#LofiChill</span>
+                                    <span class="music-pill-tag">#Chillhop</span>
+                                    <span class="music-pill-tag">#R&B</span>
+                                    <span class="music-pill-tag">#Acoustic</span>
+                                    <span class="music-pill-tag">#MidnightVibes</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Affiliated Servers & Direct Connections -->
+                    <div class="bento-col bento-col-right">
+                        <!-- Featured Discord Servers -->
+                        <section class="servers-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-server"></i>
+                                <span>AFFILIATED DISCORD SERVERS</span>
+                            </div>
+
+                            <div class="servers-grid" id="servers-grid">
+                                <!-- Server cards dynamically rendered from config.js -->
+                            </div>
+                        </section>
+
+                        <!-- Social Links Pills -->
+                        <section class="socials-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-link"></i>
+                                <span>DIRECT CONNECTIONS</span>
+                            </div>
+                            <div class="socials-list" id="socials-list">
+                                <!-- Social buttons rendered from config.js -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Card Footer with Realtime Clock & Signature -->
+                <footer class="card-footer">
+                    <div class="footer-left">
+                        <i class="fa-regular fa-clock"></i>
+                        <span id="local-time">00:00:00 GMT+7</span>
+                    </div>
+                    <div class="footer-center">
+                        <span class="mono-logo">PHẠM NHẬT TÂM • MUSIC SANCTUARY</span>
+                    </div>
+                    <div class="footer-right">
+                        <i class="fa-solid fa-signal"></i>
+                        <span id="ping-indicator">24ms • 100% ONLINE</span>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <!-- Modal Avatar Preview -->
+    <div id="avatar-modal" class="avatar-modal">
+        <div class="avatar-modal-card">
+            <img src="1788525343888_442268652742412938_442268652742412938_4117fb47a2e90ab4a11b209a14c08ec6.jpg" alt="Phạm Nhật Tâm Avatar" id="avatar-modal-img">
+            <div class="avatar-modal-info">
+                <span class="avatar-modal-name">Phạm Nhật Tâm</span>
+                <span class="avatar-modal-tag">@darakz.xyz • Music Sanctuary</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts with Cache Buster -->
+    <script src="config.js?v=6.0"></script>
+    <script src="script.js?v=6.0"></script>
+</body>
+</html>

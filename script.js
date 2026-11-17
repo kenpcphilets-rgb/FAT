@@ -44,13 +44,13 @@ function initProfileUI() {
     if (enterAvatarEl && CONFIG.profile.avatar) enterAvatarEl.src = CONFIG.profile.avatar;
     if (enterNameEl && CONFIG.profile.name) enterNameEl.textContent = CONFIG.profile.name;
 
-    // Initialize Discord Avatar Decoration from CONFIG
+    // Initialize Discord Avatar Decoration from CONFIG (Only if explicitly enabled)
     const decorEl = document.getElementById('avatar-decoration');
     const cuteDecorEl = document.getElementById('cute-avatar-decoration');
     const avatarWrapper = document.getElementById('avatar-wrapper');
     const cuteAvatarWrap = document.querySelector('.cute-avatar-wrap');
     const defaultDecoration = CONFIG.profile.avatarDecoration || 'discord_avatar_decoration.png';
-    if (defaultDecoration) {
+    if (CONFIG.profile.useDiscordAvatarDecoration && defaultDecoration) {
         if (decorEl) {
             decorEl.onerror = () => { decorEl.src = 'discord_avatar_decoration.png'; };
             decorEl.src = defaultDecoration;
@@ -63,6 +63,11 @@ function initProfileUI() {
         }
         if (avatarWrapper) avatarWrapper.classList.add('has-decoration');
         if (cuteAvatarWrap) cuteAvatarWrap.classList.add('has-decoration');
+    } else {
+        if (decorEl) decorEl.style.display = 'none';
+        if (cuteDecorEl) cuteDecorEl.style.display = 'none';
+        if (avatarWrapper) avatarWrapper.classList.remove('has-decoration');
+        if (cuteAvatarWrap) cuteAvatarWrap.classList.remove('has-decoration');
     }
 
     // Force Browser Tab Favicon to sync with cute avatar and bypass browser tab cache immediately
@@ -105,14 +110,28 @@ function initProfileUI() {
         // Safe fallback
     }
 
-    // Render Badges
+    // Render Badges (Discord Official Mini Icon Style)
     const badgesContainer = document.getElementById('badges-container');
     if (badgesContainer && CONFIG.profile.badges) {
         badgesContainer.innerHTML = '';
         CONFIG.profile.badges.forEach(badge => {
             const pill = document.createElement('div');
-            pill.className = 'badge-pill';
-            pill.innerHTML = `<i class="${badge.icon}" style="color:${badge.color || '#38bdf8'};"></i> <span>${badge.label}</span>`;
+            pill.className = 'discord-mini-badge';
+            pill.setAttribute('title', badge.label);
+            
+            const isImage = badge.icon && (badge.icon.endsWith('.svg') || badge.icon.endsWith('.png') || badge.icon.endsWith('.webp') || badge.icon.startsWith('http') || badge.icon.startsWith('data:'));
+            
+            if (isImage) {
+                pill.innerHTML = `
+                    <img src="${badge.icon}" alt="${badge.label}" class="badge-img" onerror="this.onerror=null;if('${badge.png || ''}')this.src='${badge.png}'">
+                    <span class="badge-tooltip">${badge.label}</span>
+                `;
+            } else {
+                pill.innerHTML = `
+                    <i class="${badge.icon}" style="color:${badge.color || '#38bdf8'};"></i>
+                    <span class="badge-tooltip">${badge.label}</span>
+                `;
+            }
             badgesContainer.appendChild(pill);
         });
     }
@@ -126,26 +145,37 @@ function initProfileUI() {
             card.className = 'server-card';
             card.id = `server-card-${idx}`;
             card.innerHTML = `
-                <img src="${srv.banner}" alt="${srv.name} Banner" class="server-banner-img" id="server-banner-${idx}">
-                <div class="server-body">
-                    <div class="server-icon-wrap">
-                        <img src="${srv.icon}" alt="${srv.name} Icon" class="server-icon" id="server-icon-${idx}">
+                <div class="server-banner-wrap">
+                    <img src="${srv.banner}" alt="${srv.name} Banner" class="server-banner-img" id="server-banner-${idx}">
+                    <div class="server-banner-overlay"></div>
+                    <div class="server-badge-pill">
+                        <span class="live-pulse-dot"></span>
+                        <span>${srv.tag || 'COMMUNITY'}</span>
                     </div>
-                    <div class="server-content">
-                        <div class="server-top-line">
-                            <span class="server-name" id="server-name-${idx}">${srv.name}</span>
-                            <span class="server-tag">${srv.tag}</span>
+                </div>
+                <div class="server-body">
+                    <div class="server-main-row">
+                        <div class="server-icon-wrap">
+                            <img src="${srv.icon}" alt="${srv.name} Icon" class="server-icon" id="server-icon-${idx}">
                         </div>
-                        <div class="server-stats" id="server-stats-${idx}" style="display:flex;align-items:center;gap:7px;font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);margin-top:1px;">
-                            <span style="display:inline-flex;align-items:center;gap:4px;"><i class="fa-solid fa-circle" style="color:var(--status-online);font-size:0.45rem;"></i> ${srv.online || 'Active Hub'}</span>
-                            <span>•</span>
-                            <span>${srv.members || 'Community'}</span>
+                        <div class="server-content">
+                            <div class="server-title-row">
+                                <span class="server-name" id="server-name-${idx}">${srv.name}</span>
+                                <span class="server-verified-icon" title="Official Community"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="server-stats" id="server-stats-${idx}">
+                                <span class="online-stat"><i class="fa-solid fa-circle"></i> ${srv.online || 'Active Hub'}</span>
+                                <span class="stat-dot">•</span>
+                                <span class="member-stat">${srv.members || 'Community'}</span>
+                            </div>
                         </div>
+                    </div>
+                    <div class="server-info-bottom">
                         <span class="server-role">${srv.role}</span>
                         <p class="server-desc">${srv.description}</p>
                     </div>
                     <a href="${srv.inviteUrl}" target="_blank" rel="noopener noreferrer" class="server-join-btn">
-                        <i class="fa-brands fa-discord"></i> Join ♡
+                        <i class="fa-brands fa-discord"></i> Tham Gia Server <i class="fa-solid fa-arrow-right join-arrow"></i>
                     </a>
                 </div>
             `;
@@ -176,11 +206,20 @@ function initProfileUI() {
         socialsList.innerHTML = '';
         CONFIG.socials.forEach(soc => {
             const a = document.createElement('a');
-            a.className = 'social-pill';
+            const socClass = soc.name.toLowerCase();
+            a.className = `social-pill social-${socClass}`;
             a.href = soc.url;
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
-            a.innerHTML = `<i class="${soc.icon}"></i> <span>${soc.name}</span>`;
+            const handle = soc.name === 'TikTok' ? '@nhatamxyz' : soc.name === 'Facebook' ? 'Nhật Tâm' : '@nhaatazm';
+            a.innerHTML = `
+                <div class="social-icon-box"><i class="${soc.icon}"></i></div>
+                <div class="social-meta">
+                    <span class="social-platform">${soc.name}</span>
+                    <span class="social-handle">${handle}</span>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+            `;
 
             if (soc.copy) {
                 a.addEventListener('click', (e) => {
@@ -219,7 +258,7 @@ function initProfileUI() {
         copyTagBtn.addEventListener('click', () => {
             const textToCopy = CONFIG.profile.username || CONFIG.discordId;
             navigator.clipboard.writeText(textToCopy).then(() => {
-                showToast(`Đã sao chép Discord: ${textToCopy} ♡`, 'fa-solid fa-circle-check');
+                showToast(`Đã sao chép Discord: ${textToCopy} 🚀`, 'fa-solid fa-circle-check');
                 playCuteChimeSound();
             });
         });
@@ -286,9 +325,10 @@ function initTypewriter() {
     if (!textEl || !CONFIG.profile.quotes || CONFIG.profile.quotes.length === 0) return;
 
     let quoteIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
     const quotes = CONFIG.profile.quotes;
+    let charIndex = quotes[0].length;
+    let isDeleting = true; // start ready to pause on initial quote then transition
+    textEl.textContent = quotes[0];
 
     function typeLoop() {
         const currentQuote = quotes[quoteIndex];
@@ -301,47 +341,65 @@ function initTypewriter() {
             textEl.textContent = currentQuote.substring(0, charIndex);
         }
 
-        let typeSpeed = isDeleting ? 25 : 60;
+        let typeSpeed = isDeleting ? 25 : 55;
 
         if (!isDeleting && charIndex === currentQuote.length) {
-            typeSpeed = 2800; // Pause at end of quote
+            typeSpeed = 3200; // Pause at end of quote
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             quoteIndex = (quoteIndex + 1) % quotes.length;
-            typeSpeed = 450;
+            typeSpeed = 400;
         }
 
         setTimeout(typeLoop, typeSpeed);
     }
 
-    typeLoop();
+    setTimeout(typeLoop, 3000);
 }
 
 /* ====================================================================
-   3. CLICK TO ENTER OVERLAY
+   3. CLICK TO ENTER WELCOME OVERLAY & AUDIO UNLOCK
    ==================================================================== */
 function initClickToEnter() {
     const overlay = document.getElementById('enter-overlay');
-    if (!overlay) return;
+    const audio = document.getElementById('bg-audio');
 
-    overlay.addEventListener('click', () => {
-        overlay.classList.add('entered');
-        playCuteChimeSound();
-
-        // Start Audio Playback if enabled
-        if (CONFIG.music && CONFIG.music.autoplayOnEnter) {
-            const audio = document.getElementById('bg-audio');
-            if (audio) {
-                audio.play().then(() => {
-                    updateAudioWidgetState(true);
-                    if (playlist.length > 0 && playlist[currentTrackIndex]) {
-                        showToast(`Đang phát: ${playlist[currentTrackIndex].title} ♡`, 'fa-solid fa-music');
-                    }
-                }).catch(e => console.log('Audio autoplay prevented:', e));
-            }
+    function enterSanctuary() {
+        if (overlay && !overlay.classList.contains('entered')) {
+            overlay.classList.add('entered');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
         }
-    });
+
+        if (audio && CONFIG.music && CONFIG.music.autoplayOnEnter) {
+            if (!audio.src && playlist.length > 0) {
+                audio.src = playlist[currentTrackIndex].url;
+                audio.volume = CONFIG.music.volume || 0.4;
+            }
+            audio.play().then(() => {
+                updateAudioWidgetState(true);
+                if (playlist.length > 0 && playlist[currentTrackIndex]) {
+                    showToast(`Đang phát: ${playlist[currentTrackIndex].title} 🎧`, 'fa-solid fa-music');
+                }
+            }).catch(e => {
+                console.log('Audio autoplay handled:', e);
+            });
+        }
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', enterSanctuary);
+        overlay.addEventListener('touchend', enterSanctuary, { passive: true });
+    } else {
+        // Fallback if no overlay present
+        window.addEventListener('click', () => {
+            if (audio && audio.paused && CONFIG.music && CONFIG.music.autoplayOnEnter) {
+                audio.play().then(() => updateAudioWidgetState(true)).catch(() => {});
+            }
+        }, { once: true });
+    }
 }
 
 /* ====================================================================
@@ -368,7 +426,7 @@ function initAudioController() {
         playlist = CONFIG.music.playlist;
     } else if (CONFIG.music.url) {
         playlist = [{
-            title: CONFIG.music.title || 'Lofi Chill ♡',
+            title: CONFIG.music.title || 'Lofi Chill 🎧',
             artist: CONFIG.music.artist || 'Sanctuary Beats',
             url: CONFIG.music.url
         }];
@@ -385,12 +443,12 @@ function initAudioController() {
         currentTrackIndex = index;
 
         const track = playlist[currentTrackIndex];
-        try {
-            audio.pause();
-            audio.currentTime = 0;
-        } catch (e) {}
-        audio.src = track.url;
-        audio.load();
+        const isCurrentlyPlaying = !audio.paused;
+
+        if (!audio.src || !audio.src.includes(track.url)) {
+            audio.src = track.url;
+            audio.load();
+        }
 
         if (trackTitle) {
             trackTitle.textContent = track.title;
@@ -401,12 +459,11 @@ function initAudioController() {
             artistName.textContent = `${countTag}${track.artist}`;
         }
 
-        if (autoPlay) {
+        if (autoPlay || isCurrentlyPlaying || (CONFIG.music && CONFIG.music.autoplayOnEnter)) {
             audio.play().then(() => {
                 updateAudioWidgetState(true);
-                showToast(`Đang phát: ${track.title} ♡`, 'fa-solid fa-music');
             }).catch(err => {
-                console.log('Audio play prevented:', err);
+                console.log('Audio autoplay waiting for user interaction:', err);
                 updateAudioWidgetState(false);
             });
         }
@@ -429,8 +486,8 @@ function initAudioController() {
         loadTrack(prevIdx, true);
     }
 
-    // Set initial track metadata
-    loadTrack(0, false);
+    // Set initial track metadata & start playback immediately
+    loadTrack(0, true);
 
     // Play/Pause button
     if (playBtn) {
@@ -539,7 +596,7 @@ function initMouseEffects() {
         const dy = mouseY - prevMouseY;
         const speed = Math.sqrt(dx * dx + dy * dy);
 
-        // Add to Silk Comet Ribbon Trail (soft pink)
+        // Add to Cyber Comet Ribbon Trail (Electric Cyan)
         cometRibbon.push({
             x: mouseX,
             y: mouseY,
@@ -630,8 +687,8 @@ function initMouseEffects() {
             if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple);
         }, 550);
 
-        // Spawn floating stardust & aesthetic icons
-        const cuteIcons = ['✦', '🌙', '🪐', '🎮', '🎧', '☕', '🐾', '✨', '⭐'];
+        // Spawn floating stardust & aesthetic icons (Cool & Cute Boy Vibes)
+        const cuteIcons = ['🐶', '🐾', '👓', '🎮', '🎧', '☕', '🌙', '🪐', '⚡', '✨', '⭐', '✦'];
         const chosenIcon = cuteIcons[Math.floor(Math.random() * cuteIcons.length)];
         const heartEl = document.createElement('span');
         heartEl.className = 'click-heart';
@@ -826,7 +883,7 @@ function initParticleCanvas() {
     function animateParticles() {
         ctx.clearRect(0, 0, width, height);
 
-        // 1. Draw Twinkling Pastel Stars
+        // 1. Draw Twinkling Ambient Stars
         for (let i = 0; i < stars.length; i++) {
             const st = stars[i];
             st.pulseVal += st.pulseSpeed;
@@ -835,14 +892,14 @@ function initParticleCanvas() {
             ctx.save();
             ctx.beginPath();
             ctx.arc(st.x, st.y, st.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 209, 220, ${currentAlpha})`;
+            ctx.fillStyle = `rgba(224, 242, 254, ${currentAlpha})`;
             ctx.shadowColor = '#38bdf8';
             ctx.shadowBlur = 6;
             ctx.fill();
             ctx.restore();
         }
 
-        // 2. Draw Gentle Fluttering Sakura Petals 🌸
+        // 2. Draw Gentle Floating Cosmic Stardust & Motes (Ice Blue & Cyan)
         for (let i = 0; i < petals.length; i++) {
             const p = petals[i];
             p.sway += p.swaySpeed;
@@ -863,24 +920,28 @@ function initParticleCanvas() {
             ctx.rotate(p.angle);
             ctx.scale(Math.cos(p.flip), 1);
 
-            // Draw graceful heart/sakura petal curve
+            // Draw glowing diamond cosmic sparkle
+            const rad = p.size * 0.6;
             ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.bezierCurveTo(-p.size * 0.8, -p.size * 0.7, -p.size * 1.1, p.size * 0.6, 0, p.size * 1.3);
-            ctx.bezierCurveTo(p.size * 1.1, p.size * 0.6, p.size * 0.8, -p.size * 0.7, 0, 0);
+            ctx.moveTo(0, -rad);
+            ctx.lineTo(rad * 0.4, 0);
+            ctx.lineTo(0, rad);
+            ctx.lineTo(-rad * 0.4, 0);
+            ctx.closePath();
 
-            const petalGrad = ctx.createLinearGradient(0, -p.size * 0.5, 0, p.size * 1.3);
-            petalGrad.addColorStop(0, `rgba(255, 230, 240, ${p.alpha * 0.9})`);
-            petalGrad.addColorStop(1, `rgba(255, 117, 160, ${p.alpha * 0.8})`);
+            const moteGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, rad);
+            moteGrad.addColorStop(0, `rgba(255, 255, 255, ${p.alpha * 0.95})`);
+            moteGrad.addColorStop(0.45, `rgba(56, 189, 248, ${p.alpha * 0.8})`);
+            moteGrad.addColorStop(1, `rgba(14, 165, 233, 0)`);
 
-            ctx.fillStyle = petalGrad;
-            ctx.shadowColor = 'rgba(255, 117, 160, 0.4)';
-            ctx.shadowBlur = 4;
+            ctx.fillStyle = moteGrad;
+            ctx.shadowColor = 'rgba(56, 189, 248, 0.7)';
+            ctx.shadowBlur = 8;
             ctx.fill();
             ctx.restore();
         }
 
-        // 3. Draw Fluid Silk Comet Ribbon Trail (Soft pink & lilac)
+        // 3. Draw Fluid Cyber Comet Ribbon Trail (Electric Cyan & Ice Blue)
         if (cometRibbon.length > 2) {
             ctx.save();
             for (let i = cometRibbon.length - 1; i >= 0; i--) {
@@ -903,7 +964,7 @@ function initParticleCanvas() {
                 ctx.quadraticCurveTo(prevPt.x, prevPt.y, midX, midY);
                 ctx.lineTo(pt.x, pt.y);
 
-                ctx.strokeStyle = `rgba(255, 117, 160, ${alpha})`;
+                ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
                 ctx.lineWidth = lineWidth;
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
@@ -931,14 +992,14 @@ function initParticleCanvas() {
             ctx.save();
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 182, 218, ${s.alpha})`;
+            ctx.fillStyle = `rgba(56, 189, 248, ${s.alpha})`;
             ctx.shadowColor = '#38bdf8';
             ctx.shadowBlur = 8;
             ctx.fill();
             ctx.restore();
         }
 
-        // 5. Draw & Update Shooting Stars (Pastel Pink/Lavender Comets)
+        // 5. Draw & Update Shooting Stars (Cyan & Sapphire Comets)
         if (CONFIG.effects.enableShootingStars !== false) {
             if (Date.now() >= nextShootingStarTime) spawnShootingStar();
 
@@ -972,9 +1033,9 @@ function initParticleCanvas() {
 
                 ctx.save();
                 const tailGrad = ctx.createLinearGradient(tailX, tailY, star.x, star.y);
-                tailGrad.addColorStop(0, 'rgba(255, 117, 160, 0)');
-                tailGrad.addColorStop(0.5, `rgba(255, 182, 218, ${star.alpha * 0.35})`);
-                tailGrad.addColorStop(0.85, `rgba(255, 255, 255, ${star.alpha * 0.85})`);
+                tailGrad.addColorStop(0, 'rgba(56, 189, 248, 0)');
+                tailGrad.addColorStop(0.5, `rgba(56, 189, 248, ${star.alpha * 0.45})`);
+                tailGrad.addColorStop(0.85, `rgba(224, 242, 254, ${star.alpha * 0.85})`);
                 tailGrad.addColorStop(1, `rgba(255, 255, 255, ${star.alpha})`);
 
                 ctx.beginPath();
@@ -1100,24 +1161,32 @@ function updateDiscordPresenceUI(data) {
     const avatarWrapper = document.getElementById('avatar-wrapper');
     const cuteAvatarWrap = document.querySelector('.cute-avatar-wrap');
 
-    let decorationUrl = CONFIG.profile.avatarDecoration || 'discord_avatar_decoration.png';
-    if (discord_user && discord_user.avatar_decoration_data && discord_user.avatar_decoration_data.asset) {
-        decorationUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${discord_user.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
-    }
+    // 1. Avatar Decoration (Only if enabled in config)
+    if (CONFIG.profile.useDiscordAvatarDecoration) {
+        let decorationUrl = CONFIG.profile.avatarDecoration || 'discord_avatar_decoration.png';
+        if (discord_user && discord_user.avatar_decoration_data && discord_user.avatar_decoration_data.asset) {
+            decorationUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${discord_user.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
+        }
 
-    if (decorationUrl) {
-        if (decorEl) {
-            decorEl.onerror = () => { decorEl.src = 'discord_avatar_decoration.png'; };
-            decorEl.src = decorationUrl;
-            decorEl.style.display = 'block';
+        if (decorationUrl) {
+            if (decorEl) {
+                decorEl.onerror = () => { decorEl.src = 'discord_avatar_decoration.png'; };
+                decorEl.src = decorationUrl;
+                decorEl.style.display = 'block';
+            }
+            if (cuteDecorEl) {
+                cuteDecorEl.onerror = () => { cuteDecorEl.src = 'discord_avatar_decoration.png'; };
+                cuteDecorEl.src = decorationUrl;
+                cuteDecorEl.style.display = 'block';
+            }
+            if (avatarWrapper) avatarWrapper.classList.add('has-decoration');
+            if (cuteAvatarWrap) cuteAvatarWrap.classList.add('has-decoration');
         }
-        if (cuteDecorEl) {
-            cuteDecorEl.onerror = () => { cuteDecorEl.src = 'discord_avatar_decoration.png'; };
-            cuteDecorEl.src = decorationUrl;
-            cuteDecorEl.style.display = 'block';
-        }
-        if (avatarWrapper) avatarWrapper.classList.add('has-decoration');
-        if (cuteAvatarWrap) cuteAvatarWrap.classList.add('has-decoration');
+    } else {
+        if (decorEl) decorEl.style.display = 'none';
+        if (cuteDecorEl) cuteDecorEl.style.display = 'none';
+        if (avatarWrapper) avatarWrapper.classList.remove('has-decoration');
+        if (cuteAvatarWrap) cuteAvatarWrap.classList.remove('has-decoration');
     }
 
     // 2. Update Status Dot & Top Banner Status
@@ -1129,7 +1198,7 @@ function updateDiscordPresenceUI(data) {
     }
 
     if (headerStatusText) {
-        headerStatusText.textContent = `DISCORD • ${discord_status.toUpperCase()} 🌸`;
+        headerStatusText.textContent = `DISCORD • ${discord_status.toUpperCase()} 🌙`;
     }
 
     // 3. Custom Status
@@ -1138,7 +1207,7 @@ function updateDiscordPresenceUI(data) {
     const customStatusText = document.getElementById('custom-status-text');
 
     if (customStatus) {
-        let emoji = '🌸';
+        let emoji = '🌙';
         if (customStatus.emoji) {
             if (customStatus.emoji.id) {
                 emoji = `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png" style="width:20px;height:20px;vertical-align:middle;">`;
@@ -1147,10 +1216,10 @@ function updateDiscordPresenceUI(data) {
             }
         }
         if (customStatusEmoji) customStatusEmoji.innerHTML = emoji;
-        if (customStatusText) customStatusText.textContent = customStatus.state || 'Online on Discord ♡';
+        if (customStatusText) customStatusText.textContent = customStatus.state || 'Active on Discord 🌙';
     } else {
-        if (customStatusEmoji) customStatusEmoji.textContent = '🌸';
-        if (customStatusText) customStatusText.textContent = `Status: ${discord_status.toUpperCase()} • Available ♡`;
+        if (customStatusEmoji) customStatusEmoji.textContent = '🌙';
+        if (customStatusText) customStatusText.textContent = `Status: ${discord_status.toUpperCase()} • Available 🌙`;
     }
 
     // 4. Spotify Live Activity
@@ -1232,7 +1301,7 @@ function updateDiscordPresenceUI(data) {
                 label = 'LISTENING 🎧';
                 icon = 'fa-headphones';
             } else if (gameActivity.type === 3) {
-                label = 'STREAMING ♡';
+                label = 'STREAMING 🚀';
                 icon = 'fa-video';
             }
             gameBadge.innerHTML = `<i class="fa-solid ${icon}"></i> ${label}`;
@@ -1248,12 +1317,12 @@ function setMockDiscordState(is404 = false) {
     const customStatusEmoji = document.getElementById('custom-status-emoji');
     const customStatusText = document.getElementById('custom-status-text');
 
-    if (statusDot) statusDot.className = 'status-dot online';
-    if (headerStatusText) headerStatusText.textContent = 'DISCORD • ONLINE 🌙';
+    if (statusDot) statusDot.className = 'status-dot dnd';
+    if (headerStatusText) headerStatusText.textContent = 'DISCORD • DND 🌙';
 
-    if (customStatusEmoji) customStatusEmoji.innerHTML = '🌙';
+    if (customStatusEmoji) customStatusEmoji.innerHTML = '✨';
     if (customStatusText) {
-        customStatusText.innerHTML = `Active on Discord • @${CONFIG.profile.username || 'idksenz.'} 🌙`;
+        customStatusText.innerHTML = 'Emoji phù hợp nhất để mô tả ngày của bạn?';
     }
 }
 

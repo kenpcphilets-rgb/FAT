@@ -7,33 +7,34 @@
 
 const CONFIG = {
     // 1. DISCORD USER ID:
-    discordId: "1363388808661438495",
+    discordId: "1528751528586907741",
 
     // 2. THÔNG TIN PROFILE (NHẬT TÂM):
     profile: {
-        name: "Nhật Tâm ♡",
-        username: "idksenz.",
-        title: "Night Owl 🌙 • Hardcore Gamer 🎮 • Lo-fi & Tech Addict 🎧 • Chill Guy 🪐",
+        name: "Nhật Tâm",
+        username: "2l9x",
+        title: "Gamer • Night Owl • Lo-fi & Tech Addict 🎧",
         avatar: "avatar.jpg",
         avatarDecoration: "discord_avatar_decoration.png",
         useDiscordAvatarDecoration: true,
         banner: "banner.jpg",
-        bio: "welcome to my chill sanctuary 🪐 ban ngày cày cuốc học tập ☕, ban đêm chill nhạc lofi và leo rank cùng anh em 🎧🎮. tôn chỉ sống: việc hôm nay chớ để ngày mai, mà hãy để ngày mốt ✨💤",
+        bio: "Ban ngày bận học, ban đêm bật lofi leo rank cùng anh em. Thức khuya không phải vì mất ngủ, mà vì đêm mới thực sự là của mình.",
         location: "Vietnam 🪐",
         quotes: [
-            "đêm nay leo rank gì, nghe lofi hay ngủ sớm nhỉ? 🎮",
-            "thế giới ngoài kia ồn ào quá, vào đây chill nghe nhạc cùng tui đi 🎧",
-            "tôn chỉ cuộc sống: chill hết mình, chơi hết sức và luôn giữ cái đầu lạnh 🧊",
-            "nạp chút caffeine và thức khuya cày cuốc cùng anh em ☕✨",
-            "night owl chính hiệu, nhạc chill là chân lý, game là đam mê 🌙"
+            "Thức khuya không vì mất ngủ, chỉ vì đêm mới là lúc yên tĩnh nhất.",
+            "Một ly cà phê, một playlist quen và vài ván rank cùng anh em 🎮",
+            "Nhạc bật nhỏ, đèn chỉnh dịu, việc hôm nay mai tính tiếp.",
+            "Không quan trọng thắng hay thua, quan trọng là bắn cùng ai 🎧",
+            "Ai rồi cũng phải leo rank lúc 2h sáng thôi 🌙",
+            "Sống chậm lại một nhịp, ngoài kia ồn ào thế là đủ rồi."
         ],
         badges: [
-            { icon: "fa-solid fa-moon", label: "Night Owl", color: "#38bdf8" },
-            { icon: "fa-solid fa-gamepad", label: "Hardcore Gamer", color: "#818cf8" },
-            { icon: "fa-solid fa-headphones", label: "Lo-fi Addict", color: "#22d3ee" },
-            { icon: "fa-solid fa-mug-hot", label: "100% Caffeine", color: "#f59e0b" },
-            { icon: "fa-solid fa-paw", label: "Cat Lover", color: "#bae6fd" },
-            { icon: "fa-solid fa-crown", label: "Nhật Tâm VIP", color: "#fbbf24" }
+            { id: "gamepad", icon: "badge_gamepad.svg", png: "badge_gamepad.png", label: "Game Variety: Universalist", color: "#f59e0b" },
+            { id: "sword", icon: "badge_sword.svg", png: "badge_sword.png", label: "Game Time: Eternal", color: "#f59e0b" },
+            { id: "bravery", icon: "badge_bravery.svg", png: "badge_bravery.png", label: "HypeSquad Bravery", color: "#a855f7" },
+            { id: "nitro", icon: "badge_nitro.svg", png: "badge_nitro.png", label: "Discord Nitro", color: "#f47fff" },
+            { id: "activedev", icon: "badge_activedev.svg", png: "badge_activedev.png", label: "Active Developer", color: "#22d3ee" },
+            { id: "booster", icon: "badge_booster.svg", png: "badge_booster.png", label: "Server Booster", color: "#fb923c" }
         ]
     },
 
@@ -42,15 +43,15 @@ const CONFIG = {
         {
             name: "F8 Legendary",
             role: "Chill Hangout & Gaming Community 🎮",
-            description: "Không gian giao lưu, trò chuyện, quẩy game cực vui cùng Nhật Tâm & những người bạn chiến hữu 🎮",
-            inviteUrl: "https://discord.gg/f8legendary",
+            description: "Không gian giao lưu, trò chuyện, quẩy game cực vui cùng Nhật Tâm & những người bạn chiến hữu",
+            inviteUrl: "https://discord.gg/7Dh6Djp7t4",
             icon: "f8_icon.png",
             banner: "f8_banner.png",
-            cdnIcon: "https://cdn.discordapp.com/icons/1538307697076736084/795017a2c2c5c0826c41bfb23ef8643e.png?size=256",
-            cdnBanner: "https://cdn.discordapp.com/banners/1538307697076736084/6a27ba5864b94854c07f0e6d42578a81.png?size=1024",
-            members: "710 Members",
-            online: "181 Online",
-            tag: "OFFICIAL HUB 👑",
+            cdnIcon: "https://cdn.discordapp.com/icons/1538307697076736084/bfcf1c1de01a9276e9f57a8b2f611fa9.png?size=256",
+            cdnBanner: "https://cdn.discordapp.com/banners/1538307697076736084/a_24382b66014507da54a84d11142cc466.png?size=1024",
+            members: "1,942 Members",
+            online: "195 Online",
+            tag: "OFFICIAL HUB",
             featured: true
         }
     ],
@@ -94,11 +95,11 @@ const CONFIG = {
 
     // 7. SỞ THÍCH & DAILY VIBES:
     techStack: [
-        { name: "Chiến Thần Leo Rank", domain: "Valorant, CS2 & GTA V 🎮", icon: "fa-solid fa-gamepad" },
-        { name: "Chuyên Gia Thức Đêm", domain: "Năng lượng đỉnh nhất lúc 2h sáng 🌙", icon: "fa-solid fa-moon" },
-        { name: "Playlist Bất Hủ", domain: "Lo-fi, R&B & Phonk không lối thoát 🎧", icon: "fa-solid fa-headphones" },
-        { name: "Caffeine & Đồ Ngon", domain: "Cà phê đen, nước tăng lực & ăn đêm ☕", icon: "fa-solid fa-mug-hot" },
-        { name: "Góc Setup Chiến Game", domain: "Bàn PC, gear xịn & đèn led RGB 🖥️", icon: "fa-solid fa-desktop" },
-        { name: "Chill & Vibe Out", domain: "Tận hưởng từng khoảnh khắc cuộc sống ✨", icon: "fa-solid fa-star" }
+        { name: "Chiến Thần Rank", domain: "Valorant, CS2 & GTA V", icon: "fa-solid fa-gamepad" },
+        { name: "Chuyên Gia Đêm", domain: "Năng lượng lúc 2h sáng", icon: "fa-solid fa-moon" },
+        { name: "Playlist Bất Hủ", domain: "Lo-fi, R&B & Phonk", icon: "fa-solid fa-headphones" },
+        { name: "Caffeine Power", domain: "Cà phê đen & tăng lực", icon: "fa-solid fa-mug-hot" },
+        { name: "Góc Setup PC", domain: "Battlestation & RGB", icon: "fa-solid fa-desktop" },
+        { name: "Chill & Relax", domain: "Tận hưởng cuộc sống", icon: "fa-solid fa-star" }
     ]
 };
